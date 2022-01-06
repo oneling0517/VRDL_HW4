@@ -11,7 +11,7 @@ from model import SRResNet
 from utils import *
 
 # Data parameters
-crop_size = 111  # crop size of target HR images
+crop_size = 291  # crop size of target HR images
 scaling_factor = 3  # the scaling factor for the generator; the input LR images will be downsampled from the target HR images by this factor
 
 # Model parameters
