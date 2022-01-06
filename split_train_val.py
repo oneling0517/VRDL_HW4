@@ -3,10 +3,10 @@ import os
 from sklearn.model_selection import train_test_split
 from PIL import Image
 
-train_dir = './data/training_hr_images'
+train_dir = '/content/VRDL_HW4/dataset/training_hr_images/training_hr_images'
 
-out_train_dir = './data/train'
-out_val_dir = './data/val'
+out_train_dir = '/content/VRDL_HW4/dataset/train'
+out_val_dir = '/content/VRDL_HW4/dataset/val'
 
 if not os.path.isdir(out_train_dir):
     os.mkdir(out_train_dir)
