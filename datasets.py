@@ -39,11 +39,11 @@ class SRDataset(Dataset):
 
         # Read list of image-paths
         if self.split == 'test':
-            for dir_path, dir_names, file_names in os.walk('./data/testing_lr_images'):
+            for dir_path, dir_names, file_names in os.walk('/content/VRDL_HW4/dataset/testing_lr_images/testing_lr_images'):
                 for f in file_names:
                     self.images.append(os.path.join(dir_path, f))
         else:
-            for dir_path, dir_names, file_names in os.walk(os.path.join('./data', self.split)):
+            for dir_path, dir_names, file_names in os.walk(os.path.join('/content/VRDL_HW4/dataset', self.split)):
                 for f in file_names:
                     self.images.append(os.path.join(dir_path, f))
 
