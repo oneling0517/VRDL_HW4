@@ -3,13 +3,14 @@ import os
 from datasets import SRDataset
 from utils import *
 
-output_dir = 'output'
+output_dir = 'result'
 if not os.path.isdir(output_dir):
     os.mkdir(output_dir)
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 srresnet_checkpoint = '/content/VRDL_HW4/models/best_checkpoint_srresnet.pth.tar'
 
+# Load model, either the SRResNet or the SRGAN
 srresnet = torch.load(srresnet_checkpoint)['model'].to(device)
 srresnet.eval()
 model = srresnet
@@ -20,6 +21,7 @@ test_dataset = SRDataset(split='test', crop_size=0, scaling_factor=3, lr_img_typ
 test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=1, shuffle=False, num_workers=4,
                                           pin_memory=True)
 
+# Save the images in the folder
 with torch.no_grad():
     for i, (lr_imgs, hr_imgs, image_path) in enumerate(test_loader):
         lr_imgs = lr_imgs.to(device)
