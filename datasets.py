@@ -1,9 +1,6 @@
 import os
-
 from PIL import Image
 from torch.utils.data import Dataset
-
-
 from utils import ImageTransforms
 
 
@@ -14,21 +11,27 @@ class SRDataset(Dataset):
 
     def __init__(self, split, crop_size, scaling_factor, lr_img_type, hr_img_type):
         """
+        :param data_folder: # folder with JSON data files
         :param split: one of 'train' or 'test'
         :param crop_size: crop size of target HR images
         :param scaling_factor: the input LR images will be downsampled from the target HR images by this factor; the scaling done in the super-resolution
         :param lr_img_type: the format for the LR image supplied to the model; see convert_image() in utils.py for available formats
         :param hr_img_type: the format for the HR image supplied to the model; see convert_image() in utils.py for available formats
+        :param test_data_name: if this is the 'test' split, which test dataset? (for example, "Set14")
         """
-
+        
+        #self.data_folder = data_folder
         self.split = split.lower()
         self.crop_size = int(crop_size)
         self.scaling_factor = int(scaling_factor)
         self.lr_img_type = lr_img_type
         self.hr_img_type = hr_img_type
+        #self.test_data_name = test_data_name
         self.images = []
 
         assert self.split in {'train', 'val', 'test'}
+        if self.split == 'test' and self.test_data_name is None:
+            raise ValueError("Please provide the name of the test dataset!")
         assert lr_img_type in {'[0, 255]', '[0, 1]', '[-1, 1]', 'imagenet-norm'}
         assert hr_img_type in {'[0, 255]', '[0, 1]', '[-1, 1]', 'imagenet-norm'}
 
@@ -64,6 +67,10 @@ class SRDataset(Dataset):
         # Read image
         img = Image.open(self.images[i], mode='r')
         img = img.convert('RGB')
+        """
+        if img.width <= 96 or img.height <= 96:
+            print(self.images[i], img.width, img.height)
+        """
         lr_img, hr_img = self.transform(img)
         if self.split == 'test':
             return lr_img, hr_img, self.images[i]
