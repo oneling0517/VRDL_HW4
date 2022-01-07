@@ -28,9 +28,6 @@ np.random.shuffle(images)
 train_images = images[:nbr_train]
 val_images = images[nbr_train:]
 
-#train_img, val_img = train_test_split(images, test_size=0.2)
-#print(len(train_img))
-
 for img_path in train_images:
     img = Image.open(img_path)
     img.save(os.path.join(root_train, img_path.split('/')[-1]))
