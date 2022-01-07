@@ -27,7 +27,6 @@ with torch.no_grad():
     for i, (lr_imgs, hr_imgs, image_path) in enumerate(test_loader):
         lr_imgs = lr_imgs.to(device)
         sr_imgs = convert_image(model(lr_imgs).squeeze(0).cpu().detach(), '[-1, 1]', 'pil')
-        
         output.append(image_path[0].split('/')[-1])
         sr_imgs.save(os.path.join(output_dir, output[i][:-4] + "_pred" + output[i][-4:]))
         #print(output[i][:-4] + "_pred" + output[i][-4:])
