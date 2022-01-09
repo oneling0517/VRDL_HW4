@@ -30,8 +30,10 @@ class SRDataset(Dataset):
         self.images = []
 
         assert self.split in {'train', 'val', 'test'}
+        '''
         if self.split == 'test' and self.test_data_name is None:
             raise ValueError("Please provide the name of the test dataset!")
+        '''
         assert lr_img_type in {'[0, 255]', '[0, 1]', '[-1, 1]', 'imagenet-norm'}
         assert hr_img_type in {'[0, 255]', '[0, 1]', '[-1, 1]', 'imagenet-norm'}
 
