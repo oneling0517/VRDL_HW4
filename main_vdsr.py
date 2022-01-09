@@ -7,7 +7,7 @@ import torch.optim as optim
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
 from vdsr import Net
-from dataset import DatasetFromHdf5
+from datasets import SRDataset
 
 # Training settings
 parser = argparse.ArgumentParser(description="PyTorch VDSR")
