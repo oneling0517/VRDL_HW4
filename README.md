@@ -68,6 +68,7 @@ os.chdir("/content/VRDL_HW4")
 os.chdir("/content/VRDL_HW4/models")
 !gdown --id '1Wxwr4yR2iiFN9P4hPeOMJzQyYLgo9grb' --output best_checkpoint_srresnet.pth.tar
 ```
+```
 python3 test.py
 ```
 
