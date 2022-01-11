@@ -74,7 +74,7 @@ python3 test.py
 
 ## Inference
 
-You can click [Inference.ipynb](https://colab.research.google.com/drive/1EHEAL5ENsLKIEoqerKStWYJMyqduB7aE?usp=sharing).
+You can click [here](https://colab.research.google.com/drive/1EHEAL5ENsLKIEoqerKStWYJMyqduB7aE?usp=sharing) or just run Inference.ipynb.
 
 ## Reference
 https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Super-Resolution.git
