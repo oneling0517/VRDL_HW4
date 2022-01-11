@@ -8,7 +8,8 @@ Click [My colab link](https://colab.research.google.com/drive/1mrqrHPnOH7Jx5W3o_
 ```
 !git clone https://github.com/oneling0517/VRDL_HW4.git
 ```
-## Dataset Download
+## Datasets Download
+You can download the datasets [here](https://drive.google.com/file/d/1GL_Rh1N-WjrvF_-YOKOyvq0zrV6TF4hb/view).
 ```
 os.chdir("/content/VRDL_HW4")
 !gdown --id '1GL_Rh1N-WjrvF_-YOKOyvq0zrV6TF4hb' --output dataset.zip
@@ -17,8 +18,35 @@ os.chdir("/content/VRDL_HW4")
 !unzip -q 'dataset.zip' -d dataset
 ```
 
+## Data Directory
++- dataset
+    +- testing_lr_images
+        +- testing_lr_images
+            +- 00.png
+            +- 01.png
+            ...
+            +- 13.png
+    +- training_hr_images
+        +- training_hr_images
+            +- 2092.png
+            +- 8049.png
+            +- 8143.png
+            ...
+datasets.py
+eval.py
+model.py
+split_train_val.py
+test.py
+train.py
+utils.py
+
+## Split the training data
+```
+python3 split_train_val.py
+```
+
 ## Training
-Use SRResNet
+Use SRResNet model.
 ```
 python3 train.py
 ```
@@ -47,3 +75,4 @@ You can click [Inference.ipynb](https://colab.research.google.com/drive/1EHEAL5E
 ## Reference
 https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Super-Resolution.git
 https://github.com/pengpaiSH/Kaggle_NCFM.git
+
