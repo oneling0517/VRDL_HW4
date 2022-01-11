@@ -5,7 +5,7 @@ from skimage.metrics import peak_signal_noise_ratio
 from torch import nn
 from torch.utils.tensorboard import SummaryWriter
 from datasets import SRDataset
-from models import SRResNet
+from model import SRResNet
 from utils import *
 
 # Data parameters
