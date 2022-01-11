@@ -1,13 +1,11 @@
 import os
 import time
-
 import torch.backends.cudnn as cudnn
 from skimage.metrics import peak_signal_noise_ratio
 from torch import nn
 from torch.utils.tensorboard import SummaryWriter
-
 from datasets import SRDataset
-from model import SRResNet
+from models import SRResNet
 from utils import *
 
 # Data parameters
@@ -30,6 +28,7 @@ batch_size = 32  # batch size
 start_epoch = 0  # start at this epoch
 iterations = 1e5  # number of training iterations
 workers = 4  # number of workers for loading data in the DataLoader
+#print_freq = 500  # print training status once every __ batches
 lr = 1e-3  # learning rate
 grad_clip = True  # clip if gradients are exploding
 
@@ -81,13 +80,13 @@ def main():
 
     val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=1, shuffle=True, num_workers=workers,
                                              pin_memory=True)
+    
     # Total number of epochs to train for
     epochs = int(iterations // len(train_loader) + 1)
 
     max_psnr = 0
     # Epochs
     for epoch in range(start_epoch, epochs):
-
         # One epoch's training
         train(train_loader=train_loader,
               model=model,
@@ -99,12 +98,14 @@ def main():
                    epoch=epoch)
         if psnr.avg > max_psnr:
             max_psnr = psnr.avg
-            torch.save({'epoch': epoch, 'model': model, 'optimizer': optimizer},
-                       os.path.join(checkpoint_dir, 'best_checkpoint_srresnet.pth.tar'))
+            torch.save({'epoch': epoch, 
+                        'model': model, 
+                        'optimizer': optimizer},os.path.join(checkpoint_dir, 'best_checkpoint_srresnet.pth.tar'))
 
         # Save checkpoint
-        torch.save({'epoch': epoch, 'model': model, 'optimizer': optimizer},
-                   os.path.join(checkpoint_dir, 'checkpoint_srresnet.pth.tar'))
+        torch.save({'epoch': epoch, 
+                    'model': model, 
+                    'optimizer': optimizer},os.path.join(checkpoint_dir, 'checkpoint_srresnet.pth.tar'))
 
 
 def train(train_loader, model, criterion, optimizer, epoch):
@@ -181,15 +182,20 @@ def val(val_loader, model, epoch):
     model.eval()
     PSNRs = AverageMeter()
     with torch.no_grad():
+        # Batches
         for i, (lr_imgs, hr_imgs) in enumerate(val_loader):
             # Move to default device
             lr_imgs = lr_imgs.to(device)
             hr_imgs = hr_imgs.to(device)
-
+            
+            # Forward prop.
             sr_imgs = model(lr_imgs)
+            
+            # Calculate PSNR
             sr_imgs_y = convert_image(sr_imgs, source='[-1, 1]', target='y-channel').squeeze(0)
             hr_imgs_y = convert_image(hr_imgs, source='[-1, 1]', target='y-channel').squeeze(0)
             psnr = peak_signal_noise_ratio(hr_imgs_y.cpu().numpy(), sr_imgs_y.cpu().numpy(), data_range=255.)
+            
             PSNRs.update(psnr, lr_imgs.size(0))
     print(f'Epoch: {epoch}, PSNR: {PSNRs.avg}')
     writer.add_scalar('PSNR/val', PSNRs.avg, epoch)
