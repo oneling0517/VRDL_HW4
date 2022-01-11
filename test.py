@@ -17,7 +17,7 @@ srresnet = torch.load(srresnet_checkpoint)['model'].to(device)
 srresnet.eval()
 model = srresnet
 
-# Custom dataset
+# Custom dataloaders
 test_dataset = SRDataset(split='test', crop_size=0, scaling_factor=1 / 3, lr_img_type='imagenet-norm',
                          hr_img_type='[-1, 1]')
 
