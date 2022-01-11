@@ -61,7 +61,8 @@ python3 eval.py
 ```
 
 ## Testing
-Use the checkpoint from [Google Drive](https://drive.google.com/file/d/1Wxwr4yR2iiFN9P4hPeOMJzQyYLgo9grb/view?usp=sharing).
+Use the checkpoint from [Google Drive](https://drive.google.com/file/d/17VLv0r4bc9B7xkyhaaN_MwQAI506MpO7/view?usp=sharing).
+The final images will in the "result" folder.
 ```
 os.chdir("/content/VRDL_HW4")
 %mkdir models
