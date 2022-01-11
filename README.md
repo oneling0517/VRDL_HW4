@@ -19,26 +19,29 @@ os.chdir("/content/VRDL_HW4")
 ```
 
 ## Data Directory
-+- dataset
-    +- testing_lr_images
+```text
++- VRDL_HW4
+    +- dataset
         +- testing_lr_images
-            +- 00.png
-            +- 01.png
-            ...
-            +- 13.png
-    +- training_hr_images
+            +- testing_lr_images
+                +- 00.png
+                +- 01.png
+                ...
+                +- 13.png
         +- training_hr_images
-            +- 2092.png
-            +- 8049.png
-            +- 8143.png
-            ...
-datasets.py
-eval.py
-model.py
-split_train_val.py
-test.py
-train.py
-utils.py
+            +- training_hr_images
+                +- 2092.png
+                +- 8049.png
+                +- 8143.png
+                ...
+    datasets.py
+    eval.py
+    model.py
+    split_train_val.py
+    test.py
+    train.py
+    utils.py
+```
 
 ## Split the training data
 ```
