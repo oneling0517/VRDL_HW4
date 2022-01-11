@@ -1,20 +1,27 @@
-import os
-
-import cv2
-from skimage.metrics import peak_signal_noise_ratio
-
-from datasets import SRDataset
 from utils import *
+from skimage.metrics import peak_signal_noise_ratio
+from datasets import SRDataset
+import os
+import cv2
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+# Data
 data_path = '/content/VRDL_HW4/dataset/val'
 images = []
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+# Model checkpoints
 srresnet_checkpoint = '/content/VRDL_HW4/models/best_checkpoint_srresnet.pth.tar'
 
+# Load model, either the SRResNet or the SRGAN
+# srgan_generator = torch.load(srgan_checkpoint)['generator'].to(device)
+# srgan_generator.eval()
+# model = srgan_generator
 srresnet = torch.load(srresnet_checkpoint)['model'].to(device)
 srresnet.eval()
 model = srresnet
 
+# Custom dataloader
 val_dataset = SRDataset(split='val', crop_size=0, scaling_factor=3, lr_img_type='imagenet-norm',
                         hr_img_type='[-1, 1]')
 
@@ -44,28 +51,18 @@ def cal_psnr(sr_img, hr_img):
     hr_img_y = rgb2ycbcr(hr_img)[:, :, 0]
     return peak_signal_noise_ratio(hr_img_y, sr_img_y)
 
-
 psnrs = []
-for dir_path, dir_names, file_names in os.walk(data_path):
-    for f in file_names:
-        hr_img = Image.open(os.path.join(dir_path, f))
-        lr_img = hr_img.resize((int(hr_img.width / 3), int(hr_img.height / 3)), Image.BICUBIC)
-        sr_img = lr_img.resize((hr_img.width, hr_img.height), Image.BICUBIC)
-        sr_img = convert_image(sr_img, source='pil', target='pil')
-        hr_img = convert_image(hr_img, source='pil', target='pil')
-
-        psnrs.append(cal_psnr(sr_img, hr_img))
-
-print(f'Bicubic images PSNR: {np.mean(psnrs): .3f}')
-
-psnrs.clear()
 with torch.no_grad():
+    # Batches
     for i, (lr_imgs, hr_imgs) in enumerate(val_loader):
+        # Move to default device
         lr_imgs = lr_imgs.to(device)
         hr_imgs = hr_imgs.to(device)
 
+        # Forward prop.
         sr_imgs = model(lr_imgs)
 
+        # Calculate PSNR
         sr_img = convert_image(sr_imgs.squeeze(0), source='[-1, 1]', target='pil')
         hr_img = convert_image(hr_imgs.squeeze(0), source='[-1, 1]', target='pil')
 
