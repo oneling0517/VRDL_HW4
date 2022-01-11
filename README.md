@@ -18,36 +18,32 @@ os.chdir("/content/VRDL_HW4")
 ```
 
 ## Training
-Use Mask R-CNN resnet101
+Use SRResNet
 ```
-os.chdir("/content/Mask_RCNN/samples/VRDL_HW3")
-python3 nucleus.py train --dataset=/content/Mask_RCNN/dataset/dataset --subset=train --weights=imagenet
+python3 train.py
 ```
 
-## Validation
+## Evaluation
+Use the best checkpoint of the model to evaluate the PSNR.
 ```
-os.chdir("/content/Mask_RCNN/samples/VRDL_HW3")
-python3 nucleus.py detect --dataset=/content/Mask_RCNN/dataset/dataset --subset=val --weights=/content/Mask_RCNN/log/mask_rcnn_nucleus_0019.h5
+python3 eval.py
 ```
 
 ## Testing
-Use the weights from [Google Drive](https://drive.google.com/file/d/1Apj1jhAVYkVR-SDFrIpeDchNBDkPjfMd/view?usp=sharing).
+Use the checkpoint from [Google Drive](https://drive.google.com/file/d/1Wxwr4yR2iiFN9P4hPeOMJzQyYLgo9grb/view?usp=sharing).
 ```
-os.chdir("/content/Mask_RCNN")
-!gdown --id '1Apj1jhAVYkVR-SDFrIpeDchNBDkPjfMd' --output weights19.zip
-
-!apt-get install unzi
-!unzip -q 'weights19.zip' -d log
+os.chdir("/content/VRDL_HW4")
+%mkdir models
+os.chdir("/content/VRDL_HW4/models")
+!gdown --id '1Wxwr4yR2iiFN9P4hPeOMJzQyYLgo9grb' --output best_checkpoint_srresnet.pth.tar
 ```
-```
-os.chdir("/content/Mask_RCNN/samples/VRDL_HW3")
-python3 nucleus.py detect --dataset=/content/Mask_RCNN/dataset/dataset --subset=test --weights=/content/Mask_RCNN/log/mask_rcnn_nucleus_0019.h5
+python3 test.py
 ```
 
 ## Inference
 
-You can click [Inference.ipynb](https://colab.research.google.com/drive/13vLcOs_x6R_ALSdEjlYYxuOcER0Xr-gd?usp=sharing).
+You can click [Inference.ipynb](https://colab.research.google.com/drive/1EHEAL5ENsLKIEoqerKStWYJMyqduB7aE?usp=sharing).
 
 ## Reference
-https://github.com/matterport/Mask_RCNN/tree/master/samples/nucleus
-https://github.com/cocodataset/cocoapi/blob/master/PythonAPI/pycocotools/mask.py
+https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Super-Resolution.git
+https://github.com/pengpaiSH/Kaggle_NCFM.git
