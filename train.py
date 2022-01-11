@@ -118,6 +118,9 @@ def train(train_loader, model, criterion, optimizer, epoch):
     :param optimizer: optimizer
     :param epoch: epoch number
     """
+    # Total number of epochs to train for
+    epochs = str(int(iterations // len(train_loader) + 1))
+
     model.train()  # training mode enables batch normalization
 
     batch_time = AverageMeter()  # forward prop. + back prop. time
@@ -170,7 +173,7 @@ def train(train_loader, model, criterion, optimizer, epoch):
     writer.add_scalar('Loss/train', losses.avg, epoch)
     writer.add_scalar('PSNR/train', PSNRs.avg, epoch)
     print(
-        f'Epoch: {epoch} -- '
+        f'Epoch: {epoch} / ' + epochs + ' -- '
         f'Batch Time: {batch_time.avg:.3f} -- '
         f'Loss: {losses.avg:.4f} -- '
         f'PSNR: {PSNRs.avg:.4f}'
