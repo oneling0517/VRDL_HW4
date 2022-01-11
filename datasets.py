@@ -75,6 +75,7 @@ class SRDataset(Dataset):
         """
         lr_img, hr_img = self.transform(img)
         if self.split == 'test':
+            #print(self.images[i])
             return lr_img, hr_img, self.images[i]
         else:
             return lr_img, hr_img
