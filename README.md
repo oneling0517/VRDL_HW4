@@ -61,13 +61,13 @@ python3 eval.py
 ```
 
 ## Testing
-Use the checkpoint from [Google Drive](https://drive.google.com/file/d/1MjmVT8SBMNq-AvkFK3qs7b2_KCwpv_Z8/view?usp=sharing).
+Use the checkpoint from [Google Drive](https://drive.google.com/file/d/1EZUKbIjzva0G7L1nVRT1OK5enQBPquwx/view?usp=sharing).
 The final images will in the "result" folder.
 ```
 os.chdir("/content/VRDL_HW4")
 %mkdir models
 os.chdir("/content/VRDL_HW4/models")
-!gdown --id '1MjmVT8SBMNq-AvkFK3qs7b2_KCwpv_Z8' --output best_checkpoint_srresnet.pth.tar
+!gdown --id '1EZUKbIjzva0G7L1nVRT1OK5enQBPquwx' --output best_checkpoint_srresnet.pth.tar
 ```
 ```
 python3 test.py
