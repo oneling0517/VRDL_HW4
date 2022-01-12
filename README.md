@@ -67,7 +67,7 @@ The final images will in the "result" folder.
 os.chdir("/content/VRDL_HW4")
 %mkdir models
 os.chdir("/content/VRDL_HW4/models")
-!gdown --id '1Wxwr4yR2iiFN9P4hPeOMJzQyYLgo9grb' --output best_checkpoint_srresnet.pth.tar
+!gdown --id '1MjmVT8SBMNq-AvkFK3qs7b2_KCwpv_Z8' --output best_checkpoint_srresnet.pth.tar
 ```
 ```
 python3 test.py
