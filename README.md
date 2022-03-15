@@ -1,4 +1,4 @@
-# VRDL_HW4
+# VRDL_HW4 - Super resolution
 
 ## The link of my Colab
 
